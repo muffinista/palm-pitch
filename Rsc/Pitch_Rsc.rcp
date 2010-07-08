@@ -1,0 +1,604 @@
+#define	kFrmNavHeaderFlagsObjectFocusStartState		  0x00000001
+#define	kFrmNavHeaderFlagsAppFocusStartState		  0x00000002
+
+GENERATEHEADER "Pitch_Rsc.h"
+
+APPLICATIONICONNAME ID 1000  "Pitch"
+VERSION ID 1000 "3.2.0"
+LAUNCHERCATEGORY ID 1000 "Games"
+
+FORM ID AboutForm AT (2 0 156 158) USABLE MODAL SAVEBEHIND HELPID InstructionsString DEFAULTBTNID AboutOKButton MENUID 0
+BEGIN
+    TITLE "About Pitch"
+    LABEL "Pitch: A Palm Card Game" ID AboutTitleLabel AT (13 23) USABLE FONT 2
+    LABEL "A Muffin-Works Production.\rLearn more at\r   http://www.muffin-works.com/\r\rCopyright 2005" ID AboutText1Label AT (13 40) USABLE FONT 0
+    FIELD ID PitchVersionField AT (5 138 40 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MAXCHARS 80
+    BUTTON "OK" ID AboutOKButton AT (110 139 40 12) USABLE FRAME FONT 0
+END
+
+
+MENU ID GameFormMenuBar
+BEGIN
+    PULLDOWN "View"
+    BEGIN
+        MENUITEM "Played Cards" ID ViewPlayedCards
+        MENUITEM "Winnings" ID ViewWinnings
+        MENUITEM "Win Totals" ID ViewWinTotals
+    END
+    PULLDOWN "Options"
+    BEGIN
+        MENUITEM "Quit Game" ID MainOptionsQuitGame
+        MENUITEM "Preferences" ID MainOptionsPreferences
+        MENUITEM "Register Pitch" ID MainOptionsRegister
+    END
+    PULLDOWN "Help"
+    BEGIN
+        MENUITEM "Instructions" ID HelpInstructions
+        MENUITEM "About Pitch" ID HelpAboutPitch
+    END
+
+END
+
+MENU ID IntroFormMenuBar
+BEGIN
+    PULLDOWN "Game"
+    BEGIN
+        MENUITEM "New Game" ID StartNewGame
+        MENUITEM "Win Totals" ID ViewWinTotals
+    END
+    PULLDOWN "Options"
+    BEGIN
+        MENUITEM "Preferences" ID MainOptionsPreferences
+        MENUITEM "Game Options" ID MainOptionsGameOptions
+        MENUITEM "Register Pitch" ID MainOptionsRegister
+    END
+    PULLDOWN "Help"
+    BEGIN
+        MENUITEM "Instructions" ID HelpInstructions
+        MENUITEM "About Pitch" ID HelpAboutPitch
+    END
+END
+
+MENU ID NonGameMenuBar
+BEGIN
+    PULLDOWN "View"
+    BEGIN
+        MENUITEM "Win Totals" ID ViewWinTotals
+    END
+    PULLDOWN "Options"
+    BEGIN
+        MENUITEM "Preferences" ID MainOptionsPreferences
+        MENUITEM "Game Options" ID MainOptionsGameOptions
+        MENUITEM "Register Pitch" ID MainOptionsRegister
+    END
+    PULLDOWN "Help"
+    BEGIN
+        MENUITEM "Instructions" ID HelpInstructions
+        MENUITEM "About Pitch" ID HelpAboutPitch
+    END
+
+END
+
+
+
+FORM ID GameForm AT (0 0 160 160) USABLE
+NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID GameFormMenuBar
+BEGIN
+    TITLE "Pitch"
+    GADGET ID MainPlayedCardsGadget AT (38 29 79 70) USABLE
+    GADGET ID MainBidTrumpGadget AT (19 148 20 12) USABLE
+    GADGET ID MainPlayerHandGadget AT (12 113 99 32) USABLE
+    FIELD ID MainBidderField AT (75 148 38 12) USABLE LEFTALIGN FONT 1 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID MainP1NameField AT (1 55 38 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID MainP2NameField AT (58 16 38 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID MainP3NameField AT (120 55 38 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID MainP0NameField AT (4 100 130 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID MainNSScoreField AT (84 1 25 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 3
+    FIELD ID MainEWScoreField AT (134 1 25 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 3
+    LABEL "Bid:" ID MainUnnamed1007Label AT (4 148) USABLE FONT 0
+    LABEL "N/S:" ID NSScoreLabel AT (63 1) USABLE FONT 0
+    LABEL "E/W:" ID EWScoreLabel AT (113 1) USABLE FONT 0
+    LABEL "Bidder:" ID MainUnnamed1015Label AT (43 148) USABLE FONT 0
+	FIELD ID MainP1ScoreField  AT (1 69 38 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+	FIELD ID MainP3ScoreField  AT (120 69 38 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+END
+
+
+FORM ID PlayerTrumpForm AT (1 14 156 145) USABLE MODAL SAVEBEHIND HELPID PickTrumpString DEFAULTBTNID PlayerTrumpHeartsPushButton MENUID 0
+BEGIN
+    TITLE "Please Pick Trump"
+    GADGET ID PlayerTrumpPlayerHandGadget AT (30 17 94 30) USABLE
+    PUSHBUTTON "Hearts" ID PlayerTrumpHeartsPushButton AT (27 50 50 20) USABLE FONT 0 GROUP PlayerTrumpGroup
+    PUSHBUTTON "Diamonds" ID PlayerTrumpDiamondsPushButton AT (78 50 50 20) USABLE FONT 0 GROUP PlayerTrumpGroup
+    PUSHBUTTON "Clubs" ID PlayerTrumpClubsPushButton AT (27 71 50 20) USABLE FONT 0 GROUP PlayerTrumpGroup
+    PUSHBUTTON "Spades" ID PlayerTrumpSpadesPushButton AT (78 71 50 20) USABLE FONT 0 GROUP PlayerTrumpGroup
+    BUTTON "OK" ID PlayerTrumpOKButton AT (116 129 36 12) USABLE FRAME FONT 0
+    CHECKBOX "No Trump First Trick" ID PlayerTrumpNoTrumpFirstTrickPCheckbox AT (26 96 105 12) USABLE
+END
+
+NAVIGATION ID PlayerTrumpForm
+    INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	NAVIGATIONMAP
+      ROW PlayerTrumpHeartsPushButton PlayerTrumpDiamondsPushButton
+      ROW PlayerTrumpClubsPushButton PlayerTrumpSpadesPushButton
+      ROW PlayerTrumpNoTrumpFirstTrickPCheckbox
+    END
+
+
+FORM ID ScoringForm AT (0 0 160 160) USABLE  SAVEBEHIND HELPID 1000 DEFAULTBTNID ScoringOKButton MENUID GameFormMenuBar NOFRAME
+BEGIN
+    TITLE "Scoring"
+    BUTTON "OK" ID ScoringOKButton AT (122 146 36 12) USABLE FRAME FONT 0
+    LABEL "High:" ID ScoringUnnamed1502Label AT (6 16) USABLE FONT 0
+    FIELD ID ScoringHighWinnerField AT (29 16 50 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 80 UNDERLINED
+    LABEL "Low:" ID ScoringUnnamed1504Label AT (8 29) USABLE FONT 0
+    FIELD ID ScoringLowWinnerField AT (29 29 50 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 80 UNDERLINED
+    LABEL "Jack:" ID ScoringUnnamed1506Label AT (6 42) USABLE FONT 0
+    FIELD ID ScoringJackWinnerField AT (29 42 50 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 80 UNDERLINED
+    LABEL "Game:" ID ScoringUnnamed1508Label AT (1 56) USABLE FONT 0
+    FIELD ID ScoringGameWinnerField AT (29 55 120 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 80 UNDERLINED
+    FIELD ID ScoringBidResultsField AT (6 71 150 38) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 80
+    GADGET ID HighCardGadget  AT (83 18 30 32) USABLE
+    GADGET ID LowCardGadget  AT (114 18 30 32) USABLE
+	GADGET ID ScoreDisplayGadget   AT (6 111 150 32)
+END
+
+NAVIGATION ID ScoringForm
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID ScoringOKButton
+	NAVIGATIONMAP
+	    ROW ScoringOKButton BIGBUTTON
+	END
+ 	
+
+FORM ID ChooseGameTypeForm AT (2 87 156 72) USABLE MODAL SAVEBEHIND DEFAULTBTNID GameTypeOKButton MENUID 0 HELPID GameTypeString
+BEGIN
+    TITLE "Choose Game Type"
+	LIST "4 People, Teams" "3 People, Cutthroat" ID GameStyleList  AT (2 17 149 24) VISIBLEITEMS 2 USABLE
+    BUTTON "OK" ID GameTypeOKButton AT (2 58 36 12) USABLE FRAME FONT 0
+    BUTTON "Cancel" ID GameTypeCancelButton AT (42 58 36 12) USABLE FRAME FONT 0
+END
+
+NAVIGATION ID ChooseGameTypeForm
+    INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+    INITIALOBJECTID GameTypeOKButton
+    NAVIGATIONMAP
+    	ROW GameStyleList
+    	ROW GameTypeOKButton GameTypeCancelButton
+    END
+
+
+
+FORM ID PrefsForm AT (2 69 156 90) USABLE MODAL SAVEBEHIND HELPID PrefsString DEFAULTBTNID PrefsOKButton MENUID 0
+BEGIN
+    TITLE "Prefs"
+    BUTTON "OK" ID PrefsOKButton AT (1 76 36 12) USABLE FRAME FONT 0
+    BUTTON "Cancel" ID PrefsCancelButton AT (41 76 36 12) USABLE FRAME FONT 0
+    LABEL "Delay Between Tricks:" ID PrefsUnnamed1203Label AT (4 32) USABLE FONT 0
+    LABEL "Your Name:" ID PrefsUnnamed1205Label AT (4 18) USABLE FONT 0
+    FIELD ID PrefsPlayerNameField AT (54 17 100 12) USABLE LEFTALIGN FONT 0 EDITABLE UNDERLINED SINGLELINE MAXCHARS 14
+    SLIDER ID PrefsTricksDelay  AT (32 44 93 15) MIN 25 MAX 125 PAGESIZE 10 VALUE 50
+    LABEL "Short" AUTOID AT (7 45)
+    LABEL "Long" AUTOID AT (128 45)
+    GRAFFITISTATEINDICATOR AT (146 74)
+END
+
+FORM ID GameOptionsForm AT (2 69 156 90) USABLE MODAL SAVEBEHIND HELPID OptionsString DEFAULTBTNID OptionsOKButton MENUID 0
+BEGIN
+    TITLE "Game Options"
+    BUTTON "OK" ID OptionsOKButton AT (3 74 36 12) USABLE FRAME FONT 0
+    BUTTON "Cancel" ID OptionsCancelButton AT (43 74 36 12) USABLE FRAME FONT 0
+    CHECKBOX "Allow No Trump on First Trick?" ID PrefsNoTrickCheckbox  AT (6 16 AUTO AUTO)
+    CHECKBOX "Dealer can take bid" ID PrefsDealerTakeBidCheckbox   AT (6 28 AUTO AUTO)
+    CHECKBOX "Win on a bid only" ID PrefsWinOnBidCheckbox    AT (6 42 AUTO AUTO)
+	CHECKBOX "Win when you get smudge" ID PrefsWinOnSmudge     AT (6 56 AUTO AUTO)
+END
+
+
+
+FORM ID BiddingForm AT (0 0 160 160) USABLE SAVEBEHIND HELPID 0 DEFAULTBTNID BiddingOKButton MENUID JustHelpMenuBar
+BEGIN
+    TITLE "Bidding"
+    BUTTON "OK" ID BiddingOKButton AT (133 146 26 12) USABLE FRAME FONT 0
+    GADGET ID BiddingTrumpGadget  AT (108 125 50 15) USABLE
+    FIELD ID BidWinnerField  AT (1 125 100 15) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 40
+    FIELD ID BiddingP1NameField AT (2 33 46 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID BiddingP2NameField AT (57 15 45 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID BiddingP3NameField AT (112 33 46 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID BiddingP0NameField AT (57 49 56 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 19
+    FIELD ID BiddingP1BidField  AT (2 44 38 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 5 UNDERLINED
+    FIELD ID BiddingP2BidField  AT (57 27 38 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 10 UNDERLINED
+    FIELD ID BiddingP3BidField  AT (120 44 38 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 10 UNDERLINED
+    FIELD ID BiddingP0BidField  AT (57 60 38 11) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 10 UNDERLINED
+    LABEL "N/S:" ID BiddingLabel1Label AT (63 1) USABLE FONT 0
+    FIELD ID BiddingNSScoreField AT (84 1 25 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 3
+    LABEL "E/W:" ID BiddingUnnamed1011Label AT (113 1) USABLE FONT 0
+    FIELD ID BiddingEWScoreField AT (134 1 25 12) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 3
+    GADGET ID PlayerBidPlayerHandGadget AT (34 74 99 30) USABLE
+    PUSHBUTTON "Pass" ID PlayerBidPassPushButton AT (2 106 22 16) USABLE FONT 0 GROUP 1
+    PUSHBUTTON "2" ID PlayerBid2PushButton AT (25 106 16 16) USABLE FONT 0 GROUP 1
+    PUSHBUTTON "3" ID PlayerBid3PushButton AT (42 106 16 16) USABLE FONT 0 GROUP 1
+    PUSHBUTTON "4" ID PlayerBid4PushButton AT (59 106 16 16) USABLE FONT 0 GROUP 1
+    PUSHBUTTON "Smudge" ID PlayerBidSmudgePushButton AT (76 106 36 16) USABLE FONT 0 GROUP 1
+    BUTTON "Set" ID SetBidButton  AT (122 106 36 16) USABLE FRAME FONT 0
+END
+
+NAVIGATION ID BiddingForm
+    INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+    INITIALOBJECTID PlayerBidPassPushButton
+	NAVIGATIONMAP
+      ROW PlayerBidPassPushButton BIGBUTTON
+      ROW PlayerBid2PushButton BIGBUTTON
+      ROW PlayerBid3PushButton BIGBUTTON
+      ROW PlayerBid4PushButton BIGBUTTON
+      ROW PlayerBidSmudgePushButton BIGBUTTON
+      ROW SetBidButton BIGBUTTON
+      ROW BiddingOKButton BIGBUTTON
+    END
+
+FORM ID TableInfoForm AT (2 25 156 133) USABLE MODAL SAVEBEHIND HELPID InfoFormString DEFAULTBTNID TableInfoOKButton MENUID 0
+BEGIN
+    TITLE "Game Info"
+    LABEL "North/South Team:" ID TableInfoUnnamed1701Label AT (7 18) USABLE FONT 0
+    LABEL "East/West Team" ID TableInfoUnnamed1702Label AT (7 46) USABLE FONT 0
+    FIELD ID TableInfoNorthSouthTeamField AT (7 30 120 12) USABLE LEFTALIGN FONT 0 NONEDITABLE UNDERLINED MULTIPLELINES MAXCHARS 80
+    FIELD ID TableInfoEastWestTeamField AT (7 58 120 12) USABLE LEFTALIGN FONT 0 NONEDITABLE UNDERLINED MULTIPLELINES MAXCHARS 80
+    BUTTON "OK" ID TableInfoOKButton AT (118 115 36 12) USABLE FRAME FONT 0
+    FIELD ID TableInfoWinningScoreField AT (62 98 15 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 3
+    LABEL "First team to" ID TableInfoUnnamed1707Label AT (7 98) USABLE FONT 0
+    LABEL "wins" ID TableInfoUnnamed1708Label AT (79 98) USABLE FONT 0
+    FIELD ID TableInfoFirstDealField AT (6 84 120 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 80
+END
+  
+    
+FORM ID TableCTInfoForm AT (2 61 156 97) USABLE MODAL SAVEBEHIND HELPID InfoFormString DEFAULTBTNID TableInfoOKButton MENUID 0
+BEGIN
+    TITLE "Game Info"
+    FIELD ID TableInfoComputerPlayers  AT (6 17 146 25) USABLE LEFTALIGN FONT 0 NONEDITABLE  MULTIPLELINES MAXCHARS 160
+    BUTTON "OK" ID TableInfoOKButton AT (118 77 36 12) USABLE FRAME FONT 0
+    FIELD ID TableInfoWinningScoreField AT (69 63 15 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 3
+    LABEL "First player to" ID TableInfoUnnamed1707Label AT (7 63) USABLE FONT 0
+    LABEL "wins" ID TableInfoUnnamed1708Label AT (86 63) USABLE FONT 0
+    FIELD ID TableInfoFirstDealField AT (6 49 144 12) USABLE LEFTALIGN FONT 0 NONEDITABLE MULTIPLELINES MAXCHARS 80
+	END
+
+    
+FORM ID MainForm AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID IntroNewGameButton MENUID IntroFormMenuBar
+BEGIN
+    TITLE "Pitch"
+    LABEL "Pitch - A card game for the Palm\r\rMuffin-Works copyright 2005\rhttp://www.muffin-works.com/" ID IntroUnnamed1801Label AT (15 17) USABLE FONT 0
+    BUTTON "New Game" ID IntroNewGameButton AT (44 77 65 12) USABLE FRAME FONT 0
+    BUTTON "Preferences" ID IntroPrefsButton AT (44 94 65 12) USABLE FRAME FONT 0
+    BUTTON "Game Options" ID IntroGameOptionsButton AT (44 110 65 12) USABLE FRAME FONT 0
+    BUTTON "Instructions" ID IntroInstructionsButton AT (44 126 65 12) USABLE FRAME FONT 0
+    BUTTON "Register!" ID IntroRegisterPitchButton  AT (44 142 65 12) USABLE FRAME FONT 0
+END
+
+NAVIGATION ID MainForm
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID IntroNewGameButton
+	NAVIGATIONMAP
+	    ROW IntroNewGameButton BIGBUTTON
+	    ROW IntroPrefsButton
+	    ROW IntroGameOptionsButton
+	    ROW IntroInstructionsButton
+	    ROW IntroRegisterPitchButton
+	END
+
+
+ALERT ID RomIncompatibleAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+    TITLE "System Incompatible"
+    MESSAGE "System Version 2.0 or greater is required to run this application."
+    BUTTONS  "OK"
+END
+
+/*ALERT ID YouWinAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+    TITLE "Winner!"
+    MESSAGE "You Win!!!"
+    BUTTONS  "OK"
+END
+
+ALERT ID YouLoseAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+    TITLE "Loser!"
+    MESSAGE "You Lose!!!"
+    BUTTONS  "OK"
+END
+
+ALERT ID BidWinnerAlert HELPID 0 DEFAULTBUTTON 0 CONFIRMATION
+BEGIN
+    TITLE "Untitled"
+    MESSAGE "^1 wins the bid with a ^2"
+    BUTTONS  "OK"
+END
+*/
+
+ICONFAMILY BEGIN
+    BITMAP "pitch2icon.bmp"  BPP 1  NOCOMPRESS TRANSPARENTINDEX 3
+    BITMAP "pitch2icon.bmp"  BPP 2  NOCOMPRESS TRANSPARENTINDEX 3
+    BITMAP "pitch2icon.bmp"  BPP 8  NOCOMPRESS TRANSPARENTINDEX 3
+END
+
+SMALLICONFAMILY BEGIN
+    BITMAP "smalliconBitmap.bmp"  BPP 1  NOCOMPRESS TRANSPARENTINDEX 2
+    BITMAP "smalliconBitmap.bmp"  BPP 2  NOCOMPRESS TRANSPARENTINDEX 2
+    BITMAP "smalliconBitmap.bmp"  BPP 8  NOCOMPRESS TRANSPARENTINDEX 2
+END
+
+BITMAPFAMILYEX ID SpadeBitmapFamily
+BEGIN
+    BITMAP "SpadeBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "SpadeBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID ClubBitmapFamily
+BEGIN
+    BITMAP "ClubBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "ClubBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID DiamondBitmapFamily
+BEGIN
+    BITMAP "DiamondBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "DiamondBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID HeartBitmapFamily
+BEGIN
+    BITMAP "HeartBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "HeartBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID GreyedHeartBitmapFamily
+BEGIN
+    BITMAP "GreyedHeartBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "GreyedHeartBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID GreyedDiamondBitmapFamily
+BEGIN
+    BITMAP "GreyedDiamondBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "GreyedDiamondBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID GreyedClubBitmapFamily
+BEGIN
+    BITMAP "GreyedClubBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "GreyedClubBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID GreyedSpadeBitmapFamily
+BEGIN
+    BITMAP "GreyedSpadeBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "GreyedSpadeBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID InvertedHeartBitmapFamily
+BEGIN
+    BITMAP "InvertedHeartBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "InvertedHeartBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID InvertedDiamondBitmapFamily
+BEGIN
+    BITMAP "InvertedDiamondBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "InvertedDiamondBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID InvertedClubBitmapFamily
+BEGIN
+    BITMAP "InvertedClubBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "InvertedClubBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+BITMAPFAMILYEX ID InvertedSpadeBitmapFamily
+BEGIN
+    BITMAP "InvertedSpadeBitmap.bmp"  BPP 1  NOCOMPRESS
+    BITMAP "InvertedSpadeBitmap.bmp"  BPP 8  NOCOMPRESS
+END
+
+FORM ID CardsPlayed  AT ( 2 2 156 156 ) DEFAULTBTNID CardsPlayedOKButton
+  NOFRAME SAVEBEHIND HELPID CardsPlayedString MODAL
+BEGIN
+    TITLE "Cards Played"
+    BUTTON "OK" ID CardsPlayedOKButton  AT (133 141 21 14)
+	TABLE ID CardTable  AT (1 14 144 124) ROWS 3 COLUMNS 4 COLUMNWIDTHS 36 36 36 36 
+	SCROLLBAR CardTableScrollBar AT (148 14 7 123) USABLE VALUE 50 MIN 0 MAX 100 PAGESIZE 10
+END
+
+NAVIGATION ID CardsPlayed
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID CardsPlayedOKButton
+	NAVIGATIONMAP
+	    ROW CardsPlayedOKButton BIGBUTTON
+	END
+
+FORM ID Winnings  AT ( 2 2 156 156 ) DEFAULTBTNID WinningsOKButton
+MODAL SAVEBEHIND HELPID WinningsString
+BEGIN
+    TITLE "Winnings"
+    BUTTON "OK" ID WinningsOKButton  AT (130 141 AUTO AUTO)
+    GADGET ID TeamAWinnings  AT (1 26 154 25)
+    GADGET ID TeamBWinnings   AT (1 65 154 25)
+    FIELD ID TeamANames  AT (1 13 107 12) MAXCHARS 255 NONEDITABLE
+    FIELD ID TeamBNames   AT (1 52 107 12) MAXCHARS 255 NONEDITABLE
+	FIELD ID TeamCNames    AT (1 93 107 12) MAXCHARS 255 NONEDITABLE
+	GADGET ID TeamCWinnings    AT (1 106 154 25)
+END
+
+FORM ID NewGameForm   AT ( 0 0 160 160 ) NOFRAME MENUID JustHelpMenuBar DEFAULTBTNID StartGameButton
+BEGIN
+    TITLE "New Game"
+    FIELD ID SetPlayer0Name  AT (62 62 78 12) USABLE LEFTALIGN FONT 0   MAXCHARS 14 UNDERLINED EDITABLE AUTOSHIFT
+    FIELD ID SetPlayer3Name  AT (117 39 38 12) USABLE LEFTALIGN FONT 0   MAXCHARS 14 UNDERLINED AUTOSHIFT EDITABLE
+    FIELD ID SetPlayer2Name  AT (62 20 38 12) USABLE LEFTALIGN FONT 0   MAXCHARS 14 UNDERLINED AUTOSHIFT EDITABLE
+    FIELD ID SetPlayer1Name  AT (4 41 38 12) USABLE LEFTALIGN FONT 0   MAXCHARS 14 EDITABLE UNDERLINED AUTOSHIFT
+    LABEL "Play To:" AUTOID AT (25 77)
+    FIELD ID SetWinningScore AT (62 77 20 11) MAXCHARS 2 EDITABLE UNDERLINED NUMERIC
+    BUTTON "OK" ID StartGameButton  AT (4 141 32 13)
+    LABEL "points." AUTOID AT (84 77)
+    LABEL "Your Name:" AUTOID AT (11 63)
+    BUTTON "Cancel" ID CancelGameButton   AT (81 141 39 13)
+	BUTTON "Options" ID OptionsGameButton    AT (39 141 39 13)
+    GRAFFITISTATEINDICATOR AT (148 141)
+END
+
+NAVIGATION ID NewGameForm
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID StartGameButton
+	NAVIGATIONMAP
+	    ROW SetPlayer2Name  
+	    ROW SetPlayer1Name SetPlayer3Name  
+	    ROW SetPlayer0Name
+		ROW SetWinningScore
+	    ROW StartGameButton OptionsGameButton CancelGameButton
+	END
+
+
+
+FORM ID NewCTGameForm   AT ( 0 0 160 160 ) NOFRAME MENUID JustHelpMenuBar DEFAULTBTNID StartGameButton
+BEGIN
+    TITLE "New Game"
+    FIELD ID SetPlayer0Name  AT (56 70 78 12) USABLE LEFTALIGN FONT 0 MAXCHARS 14 UNDERLINED EDITABLE AUTOSHIFT
+    FIELD ID SetPlayer2Name  AT (108 32 42 12) USABLE LEFTALIGN FONT 0 MAXCHARS 14 UNDERLINED AUTOSHIFT EDITABLE
+    FIELD ID SetPlayer1Name  AT (9 32 44 12) USABLE LEFTALIGN FONT 0 MAXCHARS 14 EDITABLE UNDERLINED AUTOSHIFT
+    LABEL "Play To:" AUTOID AT (19 85)
+    FIELD ID SetWinningScore AT (56 85 20 11) MAXCHARS 2 EDITABLE UNDERLINED NUMERIC
+    BUTTON "OK" ID StartGameButton  AT (4 141 32 13)
+    LABEL "points." AUTOID AT (78 85)
+    LABEL "Your Name:" AUTOID AT (5 71)
+    BUTTON "Cancel" ID CancelGameButton   AT (81 141 39 13)
+	BUTTON "Options" ID OptionsGameButton    AT (39 141 39 13)
+    GRAFFITISTATEINDICATOR AT (148 141)
+END
+
+NAVIGATION ID NewCTGameForm
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID StartGameButton
+	NAVIGATIONMAP
+		ROW SetPlayer2Name
+		ROW SetPlayer1Name SetPlayer2Name
+	    ROW SetPlayer0Name 
+		ROW SetWinningScore
+	    ROW StartGameButton OptionsGameButton CancelGameButton
+	END
+
+
+/*ALERT ID TieGameAlert
+INFORMATION HELPID InstructionsString DEFAULTBUTTON 0
+BEGIN
+     TITLE "Tied!"
+     MESSAGE "Tie game!  You must win by two points."
+     BUTTONS "OK"
+END
+*/
+MENU ID JustHelpMenuBar
+BEGIN
+    PULLDOWN "Options"
+    BEGIN
+        MENUITEM "Quit Game" ID MainOptionsQuitGame
+    END
+    PULLDOWN "Help"
+    BEGIN
+        MENUITEM "Instructions" ID HelpInstructions
+        MENUITEM "About Pitch" ID HelpAboutPitch
+    END
+END
+
+FORM ID RegAnnoyer  AT ( 0 0 160 160 ) NOFRAME
+BEGIN
+    TITLE "Please Register!"
+    BUTTON "Maybe Later" ID AnnoyContinueButton  AT (12 141 AUTO AUTO)
+    BUTTON "Register" ID AnnoyRegisterButton  AT (91 141 AUTO AUTO)
+    LABEL "Why Register?" AUTOID AT (9 19) FONT 1
+    FIELD ID PleaField  AT (5 33 146 80) MAXCHARS 2048  MULTIPLELINES NONEDITABLE
+    LABEL "Games Played:" AUTOID AT (12 121)
+    FIELD ID GamesPlayedField  AT (84 121 40 13) MAXCHARS 6 NONEDITABLE NUMERIC
+END
+
+FORM ID EnterSerialNumber   AT ( 2 58 156 100 )
+MODAL SAVEBEHIND
+BEGIN
+    TITLE "Enter Serial Number"
+    FIELD ID SerialNumber  AT (22 63 90 13) MAXCHARS 10 EDITABLE UNDERLINED
+    BUTTON "OK" ID SerialOK  AT (3 85 AUTO AUTO)
+    BUTTON "Cancel" ID SerialCancel  AT (32 85 AUTO AUTO)
+    LABEL "First, purchase the game at\rhttp://www.muffin-works.com/" AUTOID AT (6 18)
+    LABEL "Second, enter your code here:" AUTOID AT (6 49)
+    GRAFFITISTATEINDICATOR AT (145 88)
+END
+
+NAVIGATION ID EnterSerialNumber
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID SerialNumber
+	NAVIGATIONMAP
+	    ROW SerialNumber  
+	    ROW SerialOK SerialCancel  
+	END
+
+ALERT ID RegProblem
+ERROR
+BEGIN
+     TITLE "Oops!"
+     MESSAGE "There was a problem with your code.  Try again?"
+     BUTTONS "OK" "Cancel"
+END
+
+ALERT ID RegThanks DEFAULTBUTTON 0
+INFORMATION
+BEGIN
+     TITLE "Thanks!"
+     MESSAGE "Thanks For Registering!"
+     BUTTONS "OK"
+END
+
+
+FORM ID WinLossForm  AT ( 2 98 156 60 ) DEFAULTBTNID OKButton
+MODAL SAVEBEHIND HELPID WinLossRecordString
+BEGIN
+        TITLE "Win-Loss Record"
+    BUTTON "OK" ID OKButton  AT (127 42 AUTO AUTO)
+    FIELD ID GamesWon   AT (34 21 24 13) MAXCHARS 20 NONEDITABLE
+    LABEL "Wins:" AUTOID AT (9 21)
+    FIELD ID GamesLost   AT (110 20 24 13) MAXCHARS 20 NONEDITABLE
+    LABEL "Losses:" AUTOID AT (79 21)
+    BUTTON "Reset Scores" ID ResetScoresButton  AT (60 42 AUTO AUTO)
+END
+
+NAVIGATION ID WinLossForm
+	INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+	INITIALOBJECTID OKButton
+	NAVIGATIONMAP
+	    ROW OKButton BIGBUTTON
+	END
+
+STRING ID InstructionsString "Players and Cards\r\nThe deck is a standard fifty-two cards, aces are high.\r\n\r\nIf you play the team version of the game, there are four players, two in each team, with partners facing each other.  If you play cutthroat, then there are three players, all playing as individuals.\r\n\r\nEach player receives six cards, dealt three at a time.\r\n\r\nBidding\r\nThere is one round of bidding. The possible bids are two, three, four and smudge (smudge is really a bid of five). Each player in turn either passes or bids higher than the previous bid if any, except for the dealer, who, having last bid, may \"steal the bid\" by bidding the same as the highest bid. The winning bidder has the right to name trump and lead the first trick. \r\n\r\nIf the first three players pass, the dealer must bid at least the minimum bid of two. This is called a \"force bid\". \r\n\r\nThe bids represent how many of the following four items will be won when the tricks of the game are played out: \r\n\r\nHigh: Awarded to the player which holds the highest card in the trump suit in play. \r\nLow: Awarded to the player which wins the trick containing the lowest trump card in play.\r\nJack: Awarded to the player which wins the trick containing the jack of trumps. If the jack of trumps was not dealt no one gets this point; \r\nGame: Awarded to the player which has the higher total value of cards in its tricks. Card values are as follows: \r\n aces 4 points  \r\neach king  3 points  \r\neach queen  2  points\r\neach jack  1  point\r\neach ten  10  points\r\n\r\nWhichever team or player has the higher total in its tricks gets the point for game. In case of a tie, no one gets this point. \r\n\r\nSMUDGE: The bid of smudge requires all six tricks to be won by the declaring side, in addition to the four points listed above. (Sometimes a team can win all the tricks, but if the jack of trumps was not dealt, that is not sufficient to win a smudge bid.) \r\n\r\nPlay\r\nThe pitcher leads a card to the first trick, and the suit of this card becomes the trump suit. The winner of each trick leads the next, and may lead any card. A player who has a card of the suit led must either follow suit or trump. Players may play trump on any trick, even if they can follow suit. A player who has no cards of the suit led can play anything - either a trump or a card of another suit. Each trick is won by the highest trump card played, or if there are no trumps in it then by the highest card in the suit led. \r\n\r\nScoring\r\nIf you made a bid and got the points required, you get the total number of points you make (in other words, if you bid two and make four, your team scores four points). To score five points (smudge), you need to actually bid smudge - if you bid four, and actually win all the tricks, including the jack of trump, you still only score four. \r\n\r\nThe non-bidding team makes whatever number of points they earn.\r\n\r\nIf a team fails to make a bid it loses the value of the bid, while the other team scores whatever points it took. Teams can have a negative score.\r\n\r\nWinning\r\nA team needs to reach the specified number of points to win, but you can set an option which requires players to make a successful bid to win.  Because of this, it\'s possible for the winning team to have less points than the losing team. For example, suppose that we have 18 points and they have 24, but they have not yet won because they acquired their last 4 points playing against our bids. If we now bid 3 and make it, and they take 1 point, we win, even though we have just 21 points while they have 25. \r\n\r\nIf the game is tied, then play continues until someone wins a bid and the game is no longer tied.\r\n\r\n\r\n"                                                                                                                                                                                                                                                                                                                                                                                      
+STRING ID PleaString "If you like this program, please register it for $8.95.\r\nRegistering Pitch will help pay for future improvements.  It entitles you to a free copy of all future releases of Pitch.  Plus, it\'s cheap!"
+STRING ID PrefsString "Name:  Enter your name in here so everyone knows who you are!\r\n\r\nDelay Between Tricks: Use this slider to control the speed of gameplay.\r\n\r\n"     
+STRING ID OptionsString "Allow No Trump On First Trick:  This is a variant of the rules.  If this box is checked, then the bid-winner can specify that no trump cards may be played in the first trick\r\n\r\n\r\nDealer Can Take Bid:  This is another rule variant specifying that the dealer can \'take\' a bid at the current highest bid, rather than making a higher bid.\r\n\r\n\r\nWin on a bid only:  If this is set, then a team must make a bid to win the game, regardless of the score.  For example, if your team scores 2 points when the other team makes a bid and the score is 22-15, then you haven\'t won.  If you make a bid and win the next hand, then you win.\r\n\r\n\r\nWin on Smudge:  If this is set, then a successful smudge bid will end the game, regardless of score.\r\n"                                                                                                                       
+STRING ID BiddingString "This form is where you make your bid.  If other players have already made bids, then you won't be able to press those buttons.  If you are dealer and no one has bid yet, you will be forced to bid 2."
+STRING ID PickTrumpString "Once you've made a bid, this form will allow you to pick what trump you want.  If you don't want trump to be played in the first trick, you may declare that by clicking the checkbox here."
+STRING ID InfoFormString "This form shows information about the game - the teams, and how many points you need to score to win."
+STRING ID CardsPlayedString "This form shows the cards that everyone has played, in order."
+STRING ID WinningsString "This form shows the cards that your team and the other team have won.  Use it to get an idea of what points have been won."
+STRING ID WinLossRecordString "This is the total number of games that you have won, and the number of games that the Palm has won."
+STRING ID GameTypeString "Please choose the type of game you would like to play:\r\n\r\nTeams: Two teams of Two players\r\n\r\nCut Throat: Three players, all playing for themselves.\r\n\r\n"                                                                                                                                                               
+
+FORM ID GameOverForm  AT ( 0 0 160 160 )
+NOFRAME
+BEGIN
+    TITLE "Game Over"
+    FIELD ID GameResultsField  AT (21 60 119 34) MAXCHARS 255 NONEDITABLE MULTIPLELINES
+    BUTTON "New Game" ID NewGameButton  AT (104 142 AUTO AUTO)
+    BUTTON "Exit" ID ExitButton   AT (74 142 AUTO AUTO)
+END
+
+ALERT ID NoTrumpFirstTrickAlert 
+INFORMATION DEFAULTBUTTON 0
+BEGIN
+     TITLE "No Trump First Trick"
+     MESSAGE "^1 Calls No Trump First Trick"
+     BUTTONS "OK" 
+END
